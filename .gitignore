@@ -16,3 +16,4 @@ target/
 .idea/misc.xml
 .idea/vcs.xml
 /target/classes
+target/classes/application.properties
