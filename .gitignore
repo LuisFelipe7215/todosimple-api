@@ -17,3 +17,5 @@ target/
 .idea/vcs.xml
 /target/classes
 target/classes/application.properties
+target/generated-sources
+target/generated-test-sources
