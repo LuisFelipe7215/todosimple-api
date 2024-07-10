@@ -15,3 +15,4 @@ target/
 
 .idea/misc.xml
 .idea/vcs.xml
+/target/classes
