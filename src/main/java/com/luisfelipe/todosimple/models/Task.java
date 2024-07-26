@@ -1,7 +1,5 @@
 package com.luisfelipe.todosimple.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,7 +18,6 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    @JsonBackReference
     private User user;
 
     @Column(name = "description", length = 255, nullable = false)
