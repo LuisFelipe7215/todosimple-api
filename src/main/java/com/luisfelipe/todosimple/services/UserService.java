@@ -2,6 +2,8 @@ package com.luisfelipe.todosimple.services;
 
 import com.luisfelipe.todosimple.models.User;
 import com.luisfelipe.todosimple.repositories.UserRepository;
+import com.luisfelipe.todosimple.services.exceptions.DataBindingViolationException;
+import com.luisfelipe.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException("User cannot be found! id: " + id + ", Type: " + User.class.getName()));
+        return user.orElseThrow(() -> new ObjectNotFoundException("User cannot be found! id: " + id + ", Type: " + User.class.getName()));
     }
 
     @Transactional
@@ -39,7 +41,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("It's not possible to delete when there are related entities!");
+            throw new DataBindingViolationException("It's not possible to delete when there are related entities!");
         }
 
     }

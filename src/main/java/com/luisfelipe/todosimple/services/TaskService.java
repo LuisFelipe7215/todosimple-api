@@ -3,6 +3,8 @@ package com.luisfelipe.todosimple.services;
 import com.luisfelipe.todosimple.models.Task;
 import com.luisfelipe.todosimple.models.User;
 import com.luisfelipe.todosimple.repositories.TaskRepository;
+import com.luisfelipe.todosimple.services.exceptions.DataBindingViolationException;
+import com.luisfelipe.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public class TaskService {
 
     public Task findById(Long id){
         Optional<Task> task = this.taskRepository.findById(id);
-        return task.orElseThrow(() -> new RuntimeException("Task cannot be found! id: " + id + ", Type: " + Task.class.getName()));
+        return task.orElseThrow(() -> new ObjectNotFoundException("Task cannot be found! id: " + id + ", Type: " + Task.class.getName()));
     }
 
     public List<Task> findAllByUserId(Long userId){
@@ -49,7 +51,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e){
-            throw new RuntimeException("It's not possible to delete when there are related entities!");
+            throw new DataBindingViolationException("It's not possible to delete when there are related entities!");
         }
     }
 }
