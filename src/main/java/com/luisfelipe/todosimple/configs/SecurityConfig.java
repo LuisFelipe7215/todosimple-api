@@ -1,5 +1,6 @@
 package com.luisfelipe.todosimple.configs;
 
+import com.luisfelipe.todosimple.security.JWTAuthenticationFilter;
 import com.luisfelipe.todosimple.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,8 +51,10 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll()
                 .antMatchers(PUBLIC_MATCHES).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and()
+                .authenticationManager(authenticationManager);
 
+        http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, this.jwtUtil));
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

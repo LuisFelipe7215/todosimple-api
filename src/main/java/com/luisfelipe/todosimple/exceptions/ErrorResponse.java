@@ -19,19 +19,25 @@ public class ErrorResponse {
     private String stacktrace;
     private List<ValidationError> errors;
 
-
     @Getter
     @Setter
     @RequiredArgsConstructor
-    private static class ValidationError{
+    private static class ValidationError {
+
         private final String field;
         private final String message;
+
     }
 
-    public void addValidationError(String field, String message){
-        if(Objects.isNull(errors)){
+    public void addValidationError(String field, String message) {
+        if (Objects.isNull(errors)) {
             this.errors = new ArrayList<>();
         }
         this.errors.add(new ValidationError(field, message));
+    }
+
+    public String toJson() {
+        return "{\"status\": " + getStatus() + ", " +
+                "\"message\": \"" + getMessage() + "\"}";
     }
 }
